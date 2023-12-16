@@ -12,37 +12,32 @@ COMANDS = [
 ]
 
 
-# Обрабатывает все текстовые сообщения, содержащие команды «/start» или «/help».
-@bot.message_handler(commands=['start'])
+# Обрабатывает все текстовые сообщения, содержащие команды «/start»
 def start(message):
     bot.send_message(message.from_user.id, f'''Приветствую! Ты новенький?
     Вот список вопросов, которые я,{PERHOONA['name'][1]} , разрешаю мне задать:''')
-    help_mi()
+    help_mi(message)
 
 
-@bot.message_handler(commands=['help'])
 def help_mi(message):
     bot.send_message(message.from_user.id, *COMANDS)
 
 
-@bot.message_handler(commands=['photo'])
 def photo(message):
     with open(PERHOONA['photo'], 'rb') as photo:
         bot.spend_photo(chat_id=message.chat.id, photo=photo)
 
 
-@bot.message_handler(commands=['music'])
 def music(message):
     pass
 
 
-@bot.message_handler(commands=['info'])
 def info(message):
     pass
 
 
 # Обрабатывает все отправленные документы и аудиофайлы
-@bot.message_handler(content_types=['document', 'audio'])
+@bot.message_handler(content_types=['audio', ''])
 def docs_audio(message):
     bot.send_message(message.from_user.id, '''...
 Даже не знаю как на такое реагировать...
@@ -53,10 +48,10 @@ def docs_audio(message):
 def get_text_messages(message):
     if message.text == "Привет":
         bot.send_message(message.from_user.id, "Приветик)")
-    elif '' in message.text:
-        pass
-    elif '' in message.text:
-        pass
+    elif 'help' in message.text:
+        help_mi(message)
+    elif 'start' in message.text:
+        start(message)
     elif '' in message.text:
         pass
     elif '' in message.text:
