@@ -14,13 +14,13 @@ COMANDS = [
 
 # Обрабатывает все текстовые сообщения, содержащие команды «/start»
 def start(message):
-    bot.send_message(message.from_user.id, f'''Приветствую! Ты новенький?
-    Вот список вопросов, которые я,{PERHOONA['name'][1]} , разрешаю мне задать:''')
+    bot.send_message(message.from_user.id, f'''Приветствую! Ты новенький? Вот список вопросов, которые я,{PERHOONA['name'][1]} , разрешаю мне задать:''')
     help_mi(message)
 
 
 def help_mi(message):
-    bot.send_message(message.from_user.id, *COMANDS)
+    for c in COMANDS:
+        bot.send_message(message.from_user.id, c)
 
 
 def photo(message):
