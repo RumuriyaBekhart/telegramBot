@@ -1,34 +1,31 @@
 import telebot
-from constants import TOKEN
+from constants import TOKEN, COMANDS
 from character import PERHOONA
 
 bot = telebot.TeleBot(TOKEN)
-COMANDS = [
-    'start',
-    'help_me',
-    'photo',
-    'music',
-    'info'
-]
 
 
 # Обрабатывает все текстовые сообщения, содержащие команды «/start»
 def start(message):
-    bot.send_message(message.from_user.id, f'''Приветствую! Ты новенький? Вот список вопросов, которые я,{PERHOONA['name'][1]} , разрешаю мне задать:''')
+    bot.send_message(message.from_user.id,
+                     f'''Приветствую! Ты новенький? Вот список просьб, которые я, {PERHOONA['name'][1]}, выполню:''')
     help_mi(message)
 
 
 def help_mi(message):
+    bot.send_message(message.from_user.id, f'''Конечно помогу))''')
     for c in COMANDS:
         bot.send_message(message.from_user.id, c)
 
 
 def photo(message):
     with open(PERHOONA['photo'], 'rb') as photo:
-        bot.spend_photo(chat_id=message.chat.id, photo=photo)
+        bot.send_photo(chat_id=message.chat.id, photo=photo)
 
 
 def music(message):
+    # with open(PERHOONA['music'], 'rb') as photo:
+    #     bot.send_photo(chat_id=message.chat.id, photo=photo)
     pass
 
 
@@ -52,16 +49,16 @@ def get_text_messages(message):
         help_mi(message)
     elif 'start' in message.text:
         start(message)
-    elif '' in message.text:
-        pass
-    elif '' in message.text:
-        pass
-    elif '' in message.text:
-        pass
-    elif '' in message.text:
-        pass
-    elif '' in message.text:
-        pass
+    elif 'photo' in message.text:
+        photo(message)
+    elif 'music' in message.text:
+        music(message)
+    elif 'info' in message.text:
+        info(message)
+    elif 'тебе лет?' in message.text:
+        bot.send_message(message.from_user.id, '''У девушек такое не спрашивают вобще то (> n <)''')
+    elif 'ответь' in message.text or 'Ау' in message.text:
+        bot.send_message(message.from_user.id, '''Если не отвечаю, значит занята...''')
     elif '' in message.text:
         pass
     elif '' in message.text:
